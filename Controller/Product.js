@@ -275,8 +275,65 @@ const TotalNoPages = (req, resp) => {
 
 
 const UpdateProduct=(req,resp)=>{
-    console.log("Working")
-    const{}=req.body
+    const{ProductId,UserId,Qunatity,Catogaries,Size,Color,Discription,Price,Name}=req.body;
+    if(ProductId && UserId){
+      const VeryUserId=  jwt.verify(UserId,process.env.JwT_Seceret);
+      if(VeryUserId.result[0].id===undefined){
+        const id=VeryUserId
+        console.log(VeryUserId,"User Id")
+      }
+      else{
+       const Uid=VeryUserId.result[0].id
+        const Query=`UPDATE Products SET Product_Name  = '${Name}',Product_Discription='${Discription}',Product_Catogaries='${Catogaries}',Product_Color='${Color}',Product_Size='${Size}',Product_Qunatity='${Qunatity}',Product_Price= '${Price}' WHERE id = '${ProductId}' and User_id ='${Uid}';`
+       Product_Relation.query(Query,(err,result)=>{
+        if(err){
+        resp.send({
+            
+            operation:"Failed",
+            message:"Internal Server Error"
+        })
+        }
+        else{
+        resp.send({
+            operation:"Success",
+            message:"Data Update SuccessFully"
+        }) 
+        }
+       })
+    }
+    }
+    else{
+        resp.send({
+            operation:"Failed",
+            message:"Cannot able To get Data"
+        })
+    }
 
 }
-module.exports = { AllProduct, AddProduct, MainProduct, Catogaries, TotalNoPages, HomeProdut ,UpdateProduct}
+const DeleteProduct=(req,resp)=>{
+    const {Uid,Pid}=req.body;
+    if (Uid && Pid) {
+        const Query=`DELETE FROM Products WHERE id = '${Pid}' and User_id='${Uid}';`
+        Product_Relation.query(Query,(err,result)=>{
+            if(err){
+                resp.send({
+                    operation:"Failed",
+                    message:"Please Try After Some Time"
+                 })
+            }
+            else{
+             resp.send({
+                operation:"Success",
+                message:"Product SuccessFully Deleted"
+             })
+            }
+        })
+    }
+    else{
+        resp.send({
+            operation:"Failed",
+            message:"Unable To Get Data"
+         })
+    }
+}
+module.exports = { AllProduct, AddProduct, MainProduct, Catogaries, TotalNoPages, HomeProdut ,UpdateProduct,DeleteProduct}
