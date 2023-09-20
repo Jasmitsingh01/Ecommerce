@@ -43,9 +43,9 @@ const Verification = (req, resp) => {
       if (verifytoken.result !== undefined) {
         if (Product.length > 0) {
           Product.map((vlaue, index) => {
-            const Query = `Insert into Orders (id,Delveriy_Address,Shop_id,Product_id,Buyer_id,Product_name,Buyer_Name,Quntatity_of_Products) values (?,?,?,?,?,?,?,?)`;
+            const Query = `Insert into Orders (id,Delveriy_Address,Shop_id,Product_id,Buyer_id,Product_name,Buyer_Name,Quntatity_of_Products,ProductPrice) values (?,?,?,?,?,?,?,?,?)`;
             const id=uuidv4(10);
-            const Data=[id,Address,vlaue.User_id,vlaue.id,verifytoken.result[0].id,vlaue.Name,verifytoken.result[0].Name,vlaue.Qunatity] ;
+            const Data=[id,Address,vlaue.User_id,vlaue.id,verifytoken.result[0].id,vlaue.Name,verifytoken.result[0].Name,vlaue.Qunatity,vlaue.Price] ;
             order.query(Query,Data,(err,result)=>{
                if(err){
                   resp.send({

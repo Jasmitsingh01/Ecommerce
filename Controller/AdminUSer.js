@@ -110,4 +110,59 @@ else{
     })
 }
 }
-module.exports={Singup,login};
+
+
+const GetUser=(req,resp)=>{
+    const{token}=req.body;
+    if(token){
+        const veryToken=jwt.verify(token,process.env.JwT_Seceret);
+        if(veryToken.result[0].id!==undefined){
+            const id=veryToken.result[0].id;
+            const Query=`select Name,email from AdminUsers where id="${id}"`
+            relation.query(Query,(err,result)=>{
+                if(err){
+                    resp.send({
+                        opteration:"Failed",
+                       message:"Internal Server Errror"
+                    })
+                }
+                else{
+                    resp.send({
+                        opteration:"Success",
+                        Name:result[0].Name,
+                        email:result[0].email
+                    })
+                }
+
+            })
+        }
+        else{
+            const id=veryToken.id;
+            const Query=`select Name,email from AdminUsers where id="${id}"`
+            relation.query(Query,(err,result)=>{
+                if(err){
+                    resp.send({
+                        opteration:"Failed",
+                        message:"Internal Server Errror"
+
+                    })
+                }
+                else{
+                    resp.send({
+                        opteration:"Success",
+                        Name:result[0].Name,
+                        email:result[0].email
+                    })                }
+
+            })
+        }
+    }
+    else{
+        resp.send({
+            opteration:"Failed",
+            message:"Cannot get Data"
+
+        })    }
+
+}
+module.exports={Singup,login,GetUser};
