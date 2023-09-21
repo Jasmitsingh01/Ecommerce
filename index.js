@@ -2,8 +2,12 @@ const Express=require("express");
 const app=Express();
 const App=require('./App');
 const cors = require('cors');
-
+const path=require('path');
 require('dotenv').config();
+
+const _dirname=path.dirname("")
+const BulidFolder=path.join(_dirname,"../frontend/build")
+app.use(Express.static(BulidFolder));
 app.use(cors(
 {
     origin:"http://localhost:3000"

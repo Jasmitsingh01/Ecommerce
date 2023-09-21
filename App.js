@@ -2,6 +2,7 @@ const Express=require('express');
 const Product_User_Routes=require('./Routes/Product_UserSide_Routes');
 const Product_Admin_Routes=require('./Routes/Product_AdminSide_Routes')
 const App=Express();
+const path=require('path');
 const bodyParser = require("body-parser");
 App.use(Express.json());
 
@@ -12,5 +13,7 @@ App.use('/admin/',Product_Admin_Routes);
 
 App.use('/user',Product_User_Routes);
 
-
+App.get("*",(req,res)=>{
+    res.sendFile(path.join(__dirname,"../frontend/build","index.html"));
+})
 module.exports=App;
