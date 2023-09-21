@@ -12,6 +12,7 @@ if(req.body){
     const Query=`UPDATE Users SET Phone_Number = "${Phone}", Address = "${Address}" WHERE id="${id}"`;
     User.query(Query,(err,result)=>{
         if(err){
+            console.log(err)
             resp.send({
                 operation:"Failed",
                 messaage:"Something went Worng"
@@ -27,9 +28,25 @@ if(req.body){
     })
 }
 else{
-    resp.send({
-        operation:"Failed",
-        messaage:"Error In Token Verifycation"
+      const id= VeryToken.result[0].id;
+    const Phone=req.body.Phone;
+    const Address=req.body.Address;
+    const Query=`UPDATE Users SET Phone_Number = "${Phone}", Address = "${Address}" WHERE id="${id}"`;
+    User.query(Query,(err,result)=>{
+        if(err){
+            console.log(err)
+            resp.send({
+                operation:"Failed",
+                messaage:"Something went Worng"
+            })
+        }
+        else{
+
+            resp.send({
+                operation:"Success",
+                messaage:"Values are updated"
+            })
+        }
     })
 } 
 }

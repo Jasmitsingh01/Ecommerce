@@ -1,6 +1,7 @@
 const Product_Relation = require('../Models/Product_Relation');
 const fs = require('fs')
-const jwt = require('jsonwebtoken')
+const jwt = require('jsonwebtoken');
+
 const { v4: uuid4 } = require('uuid');
 
 const AllProduct = (req, resp) => {
@@ -12,8 +13,10 @@ const AllProduct = (req, resp) => {
     else {
         const Token = req.params['id'];
         const verifytoken = jwt.verify(Token, process.env.JwT_Seceret);
-        const id = verifytoken.result[0].id;
-        const Query = `select * from Products where User_id="${id}"`;
+        
+        if(verifytoken.result===undefined){
+            const id = verifytoken.id;
+            const Query = `select * from Products where User_id="${id}"`;
         Product_Relation.query(Query, (err, result) => {
             if (err) {
                 resp.send({
@@ -34,48 +37,106 @@ const AllProduct = (req, resp) => {
                 }
             }
         })
+        }
+        else{
+            const id = verifytoken.result[0].id;
+            const Query = `select * from Products where User_id="${id}"`;
+            Product_Relation.query(Query, (err, result) => {
+                if (err) {
+                    resp.send({
+                        error: "Something went worng"
+                    }
+                    );
+                }
+                else {
+                    if (result.length > 0) {
+                        resp.send({
+                            Products: result
+                        })
+                    }
+                    else {
+                        resp.send({
+                            error: "NO Products !!!"
+                        })
+                    }
+                }
+            })
+        }
     }
 
 }
 const AddProduct = (req, resp) => {
     if (req.body && req.files) {
         if (req.body.token) {
-
             function Convert(A) {
                 let file = fs.readFileSync("Public/" + A);
 
                 return file;
             }
             const verifytoken = jwt.verify(req.body.token, process.env.JwT_Seceret);
-            const User_id = verifytoken.result[0].id;
-            const id = uuid4(10);
-            let Product_Name = req.body.ProductName
-            let Product_Price = req.body.ProductPrice
-            let Product_Size = req.body.ProductSize
-            let Product_Color = req.body.ProductColor
-            let Product_Categaries = req.body.CATEGARIES
-            let Product_Dis = req.body.Discription
-            let Product_Qunatity = req.body.ProductQunatity
-            let Img = Convert(req.files.ProductImg[0].filename);
-            let Img2 = Convert(req.files.ProductImg[1].filename);
-            let Img3 = Convert(req.files.ProductImg[2].filename);
-            let Img4 = Convert(req.files.ProductImg[3].filename);
-
-            const data = [id, Product_Name, Product_Price, Product_Qunatity, Product_Size, Product_Color, Product_Categaries, Product_Dis, Img, Img2, Img3, Img4, User_id]
-            const Query = 'INSERT INTO PRODUCTS (id,Product_Name,Product_Price,Product_Qunatity,Product_Size,Product_Color,Product_Catogaries,Product_Discription,Product_Main_Image,Product_1_Image,Product_2_Image,Product_3_Image,User_id) Values(?,?,?,?,?,?,?,?,?,?,?,?,?);'
-            Product_Relation.query(Query, data, function (err, result) {
-                if (err) {
-
-                    resp.send({
-                        error: "Something went Worng Please Try again"
-                    })
-                }
-                else {
-                    resp.send({
-                        Response: "Data Added Successfully "
-                    })
-                }
+            if(verifytoken.result===undefined){
+                const User_id = verifytoken.id;
+                const id = uuid4(10);
+                let Product_Name = req.body.ProductName
+                let Product_Price = req.body.ProductPrice
+                let Product_Size = req.body.ProductSize
+                let Product_Color = req.body.ProductColor
+                let Product_Categaries = req.body.CATEGARIES
+                let Product_Dis = req.body.Discription
+                let Product_Qunatity = req.body.ProductQunatity
+                let Img = Convert(req.files.ProductImg[0].filename);
+                let Img2 = Convert(req.files.ProductImg[1].filename);
+                let Img3 = Convert(req.files.ProductImg[2].filename);
+                let Img4 = Convert(req.files.ProductImg[3].filename);
+    
+                const data = [id, Product_Name, Product_Price, Product_Qunatity, Product_Size, Product_Color, Product_Categaries, Product_Dis, Img, Img2, Img3, Img4, User_id]
+                const Query = 'INSERT INTO Products (id,Product_Name,Product_Price,Product_Qunatity,Product_Size,Product_Color,Product_Catogaries,Product_Discription,Product_Main_Image,Product_1_Image,Product_2_Image,Product_3_Image,User_id) Values(?,?,?,?,?,?,?,?,?,?,?,?,?);'
+                Product_Relation.query(Query, data, function (err, result) {
+                    if (err) {
+    console.log(err)
+                        resp.send({
+                            error: "Something went Worng Please Try again"
+                        })
+                    }
+                    else {
+                        resp.send({
+                            Response: "Data Added Successfully "
+                        })
+                    }
             })
+           
+            }
+            else{
+                const User_id = verifytoken.result[0].id;
+                const id = uuid4(10);
+                let Product_Name = req.body.ProductName
+                let Product_Price = req.body.ProductPrice
+                let Product_Size = req.body.ProductSize
+                let Product_Color = req.body.ProductColor
+                let Product_Categaries = req.body.CATEGARIES
+                let Product_Dis = req.body.Discription
+                let Product_Qunatity = req.body.ProductQunatity
+                let Img = Convert(req.files.ProductImg[0].filename);
+                let Img2 = Convert(req.files.ProductImg[1].filename);
+                let Img3 = Convert(req.files.ProductImg[2].filename);
+                let Img4 = Convert(req.files.ProductImg[3].filename);
+    
+                const data = [id, Product_Name, Product_Price, Product_Qunatity, Product_Size, Product_Color, Product_Categaries, Product_Dis, Img, Img2, Img3, Img4, User_id]
+                const Query = 'INSERT INTO Products (id,Product_Name,Product_Price,Product_Qunatity,Product_Size,Product_Color,Product_Catogaries,Product_Discription,Product_Main_Image,Product_1_Image,Product_2_Image,Product_3_Image,User_id) Values(?,?,?,?,?,?,?,?,?,?,?,?,?);'
+                Product_Relation.query(Query, data, function (err, result) {
+                    if (err) {
+                        console.log(err)
+                        resp.send({
+                            error: "Something went Worng Please Try again"
+                        })
+                    }
+                    else {
+                        resp.send({
+                            Response: "Data Added Successfully "
+                        })
+                    }
+            })
+            }
         }
         else {
             resp.send({
@@ -278,9 +339,25 @@ const UpdateProduct=(req,resp)=>{
     const{ProductId,UserId,Qunatity,Catogaries,Size,Color,Discription,Price,Name}=req.body;
     if(ProductId && UserId){
       const VeryUserId=  jwt.verify(UserId,process.env.JwT_Seceret);
-      if(VeryUserId.result[0].id===undefined){
-        const id=VeryUserId
-        console.log(VeryUserId,"User Id")
+      if(VeryUserId.result===undefined){
+    
+        const Uid=VeryUserId.id
+        const Query=`UPDATE Products SET Product_Name  = '${Name}',Product_Discription='${Discription}',Product_Catogaries='${Catogaries}',Product_Color='${Color}',Product_Size='${Size}',Product_Qunatity='${Qunatity}',Product_Price= '${Price}' WHERE id = '${ProductId}' and User_id ='${Uid}';`
+       Product_Relation.query(Query,(err,result)=>{
+        if(err){
+        resp.send({
+            
+            operation:"Failed",
+            message:"Internal Server Error"
+        })
+        }
+        else{
+        resp.send({
+            operation:"Success",
+            message:"Data Update SuccessFully"
+        }) 
+        }
+       })
       }
       else{
        const Uid=VeryUserId.result[0].id

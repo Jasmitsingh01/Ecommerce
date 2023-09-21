@@ -14,7 +14,7 @@ const Singup = async (req, resp) => {
         const email = req.body.email;
         const Password = HasHPass
         const DATA = [id,Name, UserName, email, Password];
-        const InsertQuery = 'INSERT INTO users (id,Name,UserName,email,password) Values(?,?,?,?,?);'
+        const InsertQuery = 'INSERT INTO Users (id,Name,UserName,email,password) Values(?,?,?,?,?);'
         User.query(InsertQuery, DATA, (err, result) => {
             if (err) {
 
@@ -24,7 +24,6 @@ const Singup = async (req, resp) => {
                     opteration: "false",
                     message: "Please try Aagin"
                 })
-                console.log(err)
             }
             else {
                 const token = jwt.sign({
@@ -63,7 +62,7 @@ const LogIn = (req, resp) => {
 if(req.body){
 const email=req.body.email;
 const Password=req.body.Password;
-const findQuery=`Select * from users where email="${email}"`
+const findQuery=`Select * from Users where email="${email}"`
 User.query(findQuery,async(err,result)=>{
     if(err){
         resp.send({

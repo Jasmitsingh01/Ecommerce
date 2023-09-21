@@ -14,7 +14,7 @@ const Singup = async (req, resp) => {
         const Password = HasHPass
         const DATA = [id,Name, UserName, email, Password];
         
-        const InsertQuery = 'INSERT INTO adminusers (id,Name,UserName,email,password) Values(?,?,?,?,?);'
+        const InsertQuery = 'INSERT INTO AdminUsers (id,Name,UserName,email,password) Values(?,?,?,?,?);'
         relation.query(InsertQuery, DATA, (err, result) => {
             if (err) {
 
@@ -57,7 +57,7 @@ const login = (req, resp) => {
 if(req.body){
 const email=req.body.email;
 const Password=req.body.Password;
-const findQuery=`Select * from Adminusers where email="${email}"`
+const findQuery=`Select * from AdminUsers where email="${email}"`
 relation.query(findQuery,async(err,result)=>{
     if(err){
         resp.send({
@@ -116,7 +116,7 @@ const GetUser=(req,resp)=>{
     const{token}=req.body;
     if(token){
         const veryToken=jwt.verify(token,process.env.JwT_Seceret);
-        if(veryToken.result[0].id!==undefined){
+        if(veryToken.result!==undefined){
             const id=veryToken.result[0].id;
             const Query=`select Name,email from AdminUsers where id="${id}"`
             relation.query(Query,(err,result)=>{
@@ -152,7 +152,8 @@ const GetUser=(req,resp)=>{
                         opteration:"Success",
                         Name:result[0].Name,
                         email:result[0].email
-                    })                }
+                    })                
+                }
 
             })
         }
