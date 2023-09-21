@@ -6,7 +6,7 @@ const path=require('path');
 require('dotenv').config();
 
 const _dirname=path.dirname("")
-const BulidFolder=path.join(_dirname,"../frontend/build")
+const BulidFolder=path.join(_dirname,"./build")
 app.use(Express.static(BulidFolder));
 app.use(cors(
 {

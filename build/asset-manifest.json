@@ -1,0 +1,21 @@
+{
+  "files": {
+    "main.css": "/static/css/main.1ab68f09.css",
+    "main.js": "/static/js/main.a2a85b67.js",
+    "static/media/banner-03.jpg": "/static/media/banner-03.f1347d60f977c5d1eb9d.jpg",
+    "static/media/home.jpg": "/static/media/home.676c4ece681c03f7607b.jpg",
+    "static/media/OIP (4).jpg": "/static/media/OIP (4).bc40fa0b9a8d23bea6bc.jpg",
+    "static/media/women-fashion-free-img.jpg": "/static/media/women-fashion-free-img.a70ab272a56accdab763.jpg",
+    "static/media/revicons.eot": "/static/media/revicons.a77de540a38981833f9e.eot",
+    "static/media/revicons.ttf": "/static/media/revicons.57fd05d4ae650374c8de.ttf",
+    "static/media/sports-shoe1-300x300.jpg": "/static/media/sports-shoe1-300x300.a9e1992568ced3d3c0e9.jpg",
+    "static/media/revicons.woff": "/static/media/revicons.e8746a624ed098489406.woff",
+    "index.html": "/index.html",
+    "main.1ab68f09.css.map": "/static/css/main.1ab68f09.css.map",
+    "main.a2a85b67.js.map": "/static/js/main.a2a85b67.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.1ab68f09.css",
+    "static/js/main.a2a85b67.js"
+  ]
+}
