@@ -4,7 +4,7 @@ const reviews='create table if not exists Reviews(id varchar(255) Primary key , 
 
 Reviews.query(reviews,(err,result)=>{
     if(err){
-    console.log("Reviews Table Not Created");
+    console.log("Reviews Table Not Created",err);
     }
     else{
         console.log("Reviews Table Created");

@@ -4,7 +4,7 @@ const CreateadminTable='create table if not exists AdminUsers (id varchar(255) P
   
 AdminUser.query(CreateadminTable,(err,result)=>{
     if(err){
-console.log("Error Admin not Created ");
+console.log(" Admin not Created ");
     }
     else{
         console.log("Admin Table created")
