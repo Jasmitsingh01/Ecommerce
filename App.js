@@ -13,7 +13,4 @@ App.use('/admin/',Product_Admin_Routes);
 
 App.use('/user',Product_User_Routes);
 
-App.get("*",(req,res)=>{
-    res.sendFile(path.join(__dirname,"./build","index.html"));
-})
 module.exports=App;
