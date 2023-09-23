@@ -4,7 +4,6 @@ const AllDetails=(req,resp)=>{
     const Query="select count(id) as Count From Products  union all select count(id) as Count From orders  union all select Quntatity_of_Products * ProductPrice from orders";
     Db.query(Query,(err,result)=>{
         if(err){
-            console.log(err)
         resp.send({
             operation:"Failed",
             message:"Internal Server Error"
