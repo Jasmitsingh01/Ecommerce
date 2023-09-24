@@ -17,7 +17,7 @@ const Singup = async (req, resp) => {
         const InsertQuery = 'INSERT INTO AdminUsers (id,Name,UserName,email,password) Values(?,?,?,?,?);'
         relation.query(InsertQuery, DATA, (err, result) => {
             if (err) {
-
+              console.log(err);
                 resp.send({
                     token: null,
                     action: "fail",
@@ -26,6 +26,8 @@ const Singup = async (req, resp) => {
                 })
             }
             else {
+                console.log(err);
+
                 const token = jwt.sign({
                     id,
                     Name,
