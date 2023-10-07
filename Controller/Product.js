@@ -124,7 +124,7 @@ const AddProduct = (req, resp) => {
                 const Query = 'INSERT INTO Products (id,Product_Name,Product_Price,Product_Qunatity,Product_Size,Product_Color,Product_Catogaries,Product_Discription,Product_Main_Image,Product_1_Image,Product_2_Image,Product_3_Image,User_id) Values(?,?,?,?,?,?,?,?,?,?,?,?,?);'
                 Product_Relation.query(Query, data, function (err, result) {
                     if (err) {
-                        console.log(err)
+                     
                         resp.send({
                             error: "Something went Worng Please Try again"
                         })
