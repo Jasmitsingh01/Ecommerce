@@ -64,7 +64,6 @@ const Verification = (req, resp) => {
          });
         }
         else{
-          console.log("this")
          resp.send({
             operation:"Failed",
             message:"Cannot get The Order Data"
