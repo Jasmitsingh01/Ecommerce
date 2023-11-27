@@ -16,8 +16,8 @@ const AllProduct = (req, resp) => {
         
         if(verifytoken.result===undefined){
             const id = verifytoken.id;
-            const Query = `select * from Products where User_id="${id}"`;
-        Product_Relation.query(Query, (err, result) => {
+            const Query = `select * from Products where User_id=(?)`;
+        Product_Relation.query(Query, id,(err, result) => {
             if (err) {
                 resp.send({
                     error: "Something went worng"
@@ -25,12 +25,14 @@ const AllProduct = (req, resp) => {
                 );
             }
             else {
+
                 if (result.length > 0) {
                     resp.send({
                         Products: result
                     })
                 }
                 else {
+
                     resp.send({
                         error: "NO Products !!!"
                     })
@@ -40,9 +42,10 @@ const AllProduct = (req, resp) => {
         }
         else{
             const id = verifytoken.result[0].id;
-            const Query = `select * from Products where User_id="${id}"`;
-            Product_Relation.query(Query, (err, result) => {
+            const Query = `select * from Products where User_id=(?)`;
+            Product_Relation.query(Query, id,(err, result) => {
                 if (err) {
+
                     resp.send({
                         error: "Something went worng"
                     }
@@ -50,11 +53,13 @@ const AllProduct = (req, resp) => {
                 }
                 else {
                     if (result.length > 0) {
+
                         resp.send({
                             Products: result
                         })
                     }
                     else {
+
                         resp.send({
                             error: "NO Products !!!"
                         })
@@ -155,9 +160,10 @@ const AddProduct = (req, resp) => {
 const MainProduct = (req, resp) => {
     if (req.params['id']) {
         const id = req.params['id'];
-        const query = `Select * from Products where id="${id}"`;
-        Product_Relation.query(query, (err, result) => {
+        const query = `Select * from Products where id=(?)`;
+        Product_Relation.query(query, id,(err, result) => {
             if (err) {
+                console.log(err)
                 resp.send({
                     operation: "Failed",
                     data: null,
@@ -171,8 +177,10 @@ const MainProduct = (req, resp) => {
                         data: result,
                         message: "Product Found"
                     })
+                    console.log("empty",result)
                 }
                 else {
+                    console.log(result)
                     resp.send({
                         operation: "Failed",
                         data: null,
@@ -252,8 +260,8 @@ const Catogaries = (req, resp) => {
         const Page = req.query.page;
         const offset = (Page - 1) * req.query.limit;
         const limit = req.query.limit;
-        const Query = `select * from Products where Product_Catogaries="${Cat}" limit ${limit} offset ${offset};`
-        Product_Relation.query(Query, (err, result) => {
+        const Query = `select * from Products where Product_Catogaries=(?) limit ${limit} offset ${offset};`
+        Product_Relation.query(Query,[Cat], (err, result) => {
             if (err) {
                 resp.send({
                     operation: "Fails",
@@ -283,8 +291,8 @@ const Catogaries = (req, resp) => {
         const Page = req.query.page;
         const offset = (Page - 1) * req.query.limit;
         const limit = req.query.limit;
-        const Query = `select * from Products where Product_Catogaries="${Cat}" limit ${limit} offset ${offset};`
-        Product_Relation.query(Query, (err, result) => {
+        const Query = `select * from Products where Product_Catogaries=(?) limit ${limit} offset ${offset};`
+        Product_Relation.query(Query,[Cat] ,(err, result) => {
             if (err) {
                 resp.send({
                     operation: "Fails",

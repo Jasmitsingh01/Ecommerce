@@ -17,7 +17,6 @@ const Singup = async (req, resp) => {
         const InsertQuery = 'INSERT INTO AdminUsers (id,Name,UserName,email,password) Values(?,?,?,?,?);'
         relation.query(InsertQuery, DATA, (err, result) => {
             if (err) {
-              console.log(err);
                 resp.send({
                     token: null,
                     action: "fail",
@@ -26,8 +25,6 @@ const Singup = async (req, resp) => {
                 })
             }
             else {
-                console.log(err);
-
                 const token = jwt.sign({
                     id,
                     Name,
@@ -59,18 +56,21 @@ const login = (req, resp) => {
 if(req.body){
 const email=req.body.email;
 const Password=req.body.Password;
-const findQuery=`Select * from AdminUsers where email="${email}"`
-relation.query(findQuery,async(err,result)=>{
+const findQuery=`Select * from AdminUsers where email=(?)`
+relation.query(findQuery,email,async(err,result)=>{
     if(err){
+
         resp.send({
         token:null,
         action: "fail",
         opteration: "false",
         message: "Something went wrong"
         })
+
     }
     else{
         if(result===null){
+
             resp.send({
                 
         token:null,
@@ -81,8 +81,9 @@ relation.query(findQuery,async(err,result)=>{
         }
     else{
       const Check= await bcrypt.compare(Password,result[0].password)
-       if(Check){
+      if(Check){
          const token=jwt.sign({result},process.env.JwT_Seceret);
+
             resp.send({
                 token:token,
                 action: "success",
@@ -92,6 +93,7 @@ relation.query(findQuery,async(err,result)=>{
             })
         }
         else{
+
             resp.send({
                 token:null,
                 action: "failed",
@@ -120,8 +122,8 @@ const GetUser=(req,resp)=>{
         const veryToken=jwt.verify(token,process.env.JwT_Seceret);
         if(veryToken.result!==undefined){
             const id=veryToken.result[0].id;
-            const Query=`select Name,email from AdminUsers where id="${id}"`
-            relation.query(Query,(err,result)=>{
+            const Query=`select Name,email from AdminUsers where id=(?)`
+            relation.query(Query,id,(err,result)=>{
                 if(err){
                     resp.send({
                         opteration:"Failed",
@@ -140,8 +142,8 @@ const GetUser=(req,resp)=>{
         }
         else{
             const id=veryToken.id;
-            const Query=`select Name,email from AdminUsers where id="${id}"`
-            relation.query(Query,(err,result)=>{
+            const Query=`select Name,email from AdminUsers where id=(?)`
+            relation.query(Query,id,(err,result)=>{
                 if(err){
                     resp.send({
                         opteration:"Failed",

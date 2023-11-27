@@ -1,15 +1,15 @@
-const Express=require("express");
-const app=Express();
-const App=require('./App');
+const Express = require("express");
+const app = Express();
+const App = require('./App');
 const cors = require('cors');
-const path=require('path');
+const path = require('path');
 require('dotenv').config();
 
 
 app.use(cors(
-{
-    origin:"*"
-}
+    {
+        origin: "*"
+    }
 ));
 app.use(App)
 
@@ -21,6 +21,6 @@ app.use(App)
 
 
 
-const port = process.env.PORT ;
+const port = process.env.PORT;
 
-app.listen(port, console.log( `Server running on port ${port} 🔥`));
+app.listen(port, console.log(`Server running on port ${port} 🔥`));

@@ -12,9 +12,10 @@ const AllOrders = (req, resp) => {
     const TokenVerify = jwt.verify(Token, process.env.JwT_Seceret);
     if (TokenVerify.result) {
       const Id = TokenVerify.result[0].id;
-      const query = `Select * From orders Where Shop_id="${Id}"`;
-      Order.query(query, (err, result) => {
+      const query = `Select * From orders Where Shop_id=(?)`;
+      Order.query(query, Id,(err, result) => {
         if (err) {
+          console.log(err)
           resp.send({
             Operation: "Failed",
             data: null,
@@ -39,8 +40,8 @@ const AllOrders = (req, resp) => {
     }
     else{
       const Id = TokenVerify.id;
-      const query = `Select * From orders Where Shop_id="${Id}"`;
-      Order.query(query, (err, result) => {
+      const query = `Select * From orders Where Shop_id=(?)`;
+      Order.query(query,Id ,(err, result) => {
         if (err) {
           resp.send({
             Operation: "Failed",
@@ -70,8 +71,8 @@ const AllOrders = (req, resp) => {
 const DispacthProduct = (req, res) => {
   const { Data } = req.body;
   if (Data !== "") {
-    const query = `delete from orders where id="${Data}"`;
-    Order.query(query, (err, result) => {
+    const query = `delete from orders where id=(?)`;
+    Order.query(query,Data ,(err, result) => {
       if (err) {
         res.send({
           Operation: "failed",
@@ -83,7 +84,6 @@ const DispacthProduct = (req, res) => {
       }
     });
   } else {
-    console.log("eerr");
     res.send({
       Operation: "failed",
     });

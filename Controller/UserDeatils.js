@@ -9,8 +9,8 @@ if(req.body){
     const id= VeryToken.id;
     const Phone=req.body.Phone;
     const Address=req.body.Address;
-    const Query=`UPDATE Users SET Phone_Number = "${Phone}", Address = "${Address}" WHERE id="${id}"`;
-    User.query(Query,(err,result)=>{
+    const Query=`UPDATE Users SET Phone_Number = (?), Address = (?) WHERE id=(?)`;
+    User.query(Query,[Phone,Address,id],(err,result)=>{
         if(err){
             console.log(err)
             resp.send({
@@ -31,8 +31,8 @@ else{
       const id= VeryToken.result[0].id;
     const Phone=req.body.Phone;
     const Address=req.body.Address;
-    const Query=`UPDATE Users SET Phone_Number = "${Phone}", Address = "${Address}" WHERE id="${id}"`;
-    User.query(Query,(err,result)=>{
+    const Query=`UPDATE Users SET Phone_Number = (?), Address = (?) WHERE id=(?)`;
+    User.query(Query,[Phone,Address,id],(err,result)=>{
         if(err){
             console.log(err)
             resp.send({
@@ -75,8 +75,8 @@ const GetDetalis=(req,resp)=>{
        
 
 
-    const query=`select * From users where id ="${id}"`;
-    User.query(query,(err,result)=>{
+    const query=`select * From users where id =(?)`;
+    User.query(query,id,(err,result)=>{
         if(err){
             
             resp.send({
