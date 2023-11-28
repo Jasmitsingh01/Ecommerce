@@ -6,7 +6,7 @@ const CreatedTableQuery=`create table  if not exists orders(id  varchar(255)Prim
 
 Order_Relation.query(CreatedTableQuery,(err,result)=>{
     if(err){
-    console.log("Order Table not created",err);
+    console.log("Order Table not created");
     }
     else{
       console.log("Order Table Created");

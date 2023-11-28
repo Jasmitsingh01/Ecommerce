@@ -83,7 +83,6 @@ const LogIn = (req, resp) => {
           });
         } 
         else {
-            console.log(result)
           const Check = await bcrypt.compare(Password, result[0].password);
           if (Check) {
             const token = jwt.sign({ result }, process.env.JwT_Seceret);

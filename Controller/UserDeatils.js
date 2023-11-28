@@ -12,7 +12,6 @@ if(req.body){
     const Query=`UPDATE Users SET Phone_Number = (?), Address = (?) WHERE id=(?)`;
     User.query(Query,[Phone,Address,id],(err,result)=>{
         if(err){
-            console.log(err)
             resp.send({
                 operation:"Failed",
                 messaage:"Something went Worng"
@@ -34,7 +33,6 @@ else{
     const Query=`UPDATE Users SET Phone_Number = (?), Address = (?) WHERE id=(?)`;
     User.query(Query,[Phone,Address,id],(err,result)=>{
         if(err){
-            console.log(err)
             resp.send({
                 operation:"Failed",
                 messaage:"Something went Worng"

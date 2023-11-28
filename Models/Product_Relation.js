@@ -4,7 +4,7 @@ const CreateTable='create table if not exists Products(id  varchar(255)  primary
 
 ProductModel.query(CreateTable,(err,result)=>{
     if(err){
-        console.log("Product Table Not Created ",err);
+        console.log("Product Table Not Created ");
     }
     else{
         console.log('Product Table Created');

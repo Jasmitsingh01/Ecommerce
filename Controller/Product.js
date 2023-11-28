@@ -258,8 +258,8 @@ const Catogaries = (req, resp) => {
     else if (req.params['id'] === 'men') {
         const Cat = req.params['id'];
         const Page = req.query.page;
-        const offset = (Page - 1) * req.query.limit;
         const limit = req.query.limit;
+        const offset = (Page - 1) * limit;
         const Query = `select * from Products where Product_Catogaries=(?) limit ${limit} offset ${offset};`
         Product_Relation.query(Query,[Cat], (err, result) => {
             if (err) {

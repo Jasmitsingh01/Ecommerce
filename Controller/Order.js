@@ -15,7 +15,6 @@ const AllOrders = (req, resp) => {
       const query = `Select * From orders Where Shop_id=(?)`;
       Order.query(query, Id,(err, result) => {
         if (err) {
-          console.log(err)
           resp.send({
             Operation: "Failed",
             data: null,
